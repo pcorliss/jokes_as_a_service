@@ -1,7 +1,8 @@
 require 'redd'
 
 class Jokes
-  def get_joke(joke_type = 'cleanjokes')
+  def get_joke(joke_type = nil)
+    joke_type ||= 'cleanjokes'
     joke = jokes(joke_type).shift
     {
       title: joke.title,
