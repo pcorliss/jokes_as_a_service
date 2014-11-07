@@ -1,7 +1,7 @@
-require 'clean_jokes'
+require 'jokes'
 
-describe CleanJokes do
-  let(:clean_jokes) { CleanJokes.new }
+describe Jokes do
+  let(:jokes) { Jokes.new }
 
   before do
     @post = double(
@@ -18,9 +18,14 @@ describe CleanJokes do
 
   context "#get_joke" do
     it "return a hash with a title and a punchline" do
-      joke = clean_jokes.get_joke
+      joke = jokes.get_joke
       expect(joke[:title]).to eq("Fake Joke")
       expect(joke[:punchline]).to eq("Fake Punchline")
+    end
+
+    it "takes a type parameter to differentiate the joke" do
+      expect(@client).to receive(:get_top).with('dadjokes').and_return([@post])
+      jokes.get_joke('dadjokes')
     end
   end
 end
