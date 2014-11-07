@@ -27,5 +27,17 @@ describe Jokes do
       expect(@client).to receive(:get_top).with('dadjokes').and_return([@post])
       jokes.get_joke('dadjokes')
     end
+
+    it "gets more jokes when it runs out" do
+      joke = jokes.get_joke
+      @post = double(
+        Redd::Object::Submission,
+        title: 'Fake Joke 2',
+        selftext: 'Fake Punchline'
+      )
+      expect(@client).to receive(:get_top).and_return([@post])
+      joke = jokes.get_joke
+      expect(joke[:title]).to eq('Fake Joke 2')
+    end
   end
 end

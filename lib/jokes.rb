@@ -14,7 +14,10 @@ class Jokes
 
   def jokes(joke_type)
     @jokes ||= {}
-    @jokes[joke_type] ||= client.get_top(joke_type).sort_by { rand }
+    if @jokes[joke_type].nil? || @jokes[joke_type].none?
+      @jokes[joke_type] = client.get_top(joke_type).sort_by { rand }
+    end
+    @jokes[joke_type]
   end
 
   def client
